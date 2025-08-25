@@ -122,93 +122,15 @@
             margin-bottom: 2rem;
         }
 
-        /* Upload Section */
-        .upload-section {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease-out 0.3s both;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .upload-area {
-            border: 3px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 4rem 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-area:hover {
-            border-color: rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
-        }
-
-        .upload-area.active {
-            border-color: var(--accent);
-            background: rgba(236, 72, 153, 0.1);
-        }
-
-        .upload-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .upload-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-            display: inline-block;
-            margin-top: 1rem;
-        }
-
-        .upload-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
-        }
-
-        /* Video Player */
+        /* Video Container */
         .video-container {
             margin: 3rem 0;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            display: none;
             animation: slideUp 0.5s ease-out;
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio for responsive iframe */
         }
 
         @keyframes slideUp {
@@ -222,9 +144,13 @@
             }
         }
 
-        video {
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            border-radius: 20px;
+            height: 100%;
+            border: none;
         }
 
         /* Script Section */
@@ -236,6 +162,17 @@
             margin-bottom: 3rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .script-header {
@@ -334,12 +271,6 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .download-btn.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
         /* Controls */
         .controls {
             position: fixed;
@@ -390,22 +321,6 @@
             width: 0%;
             transition: width 0.3s ease;
             z-index: 1000;
-        }
-
-        /* Loader */
-        .loader {
-            display: none;
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         /* Stats */
@@ -497,21 +412,9 @@
             <p class="subtitle">A Hero's Journey from South Africa to Space and Beyond</p>
         </div>
         
-        <!-- Upload Section -->
-        <div class="upload-section">
-            <div class="upload-area" id="uploadArea" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);">
-                <div class="upload-icon">🎬</div>
-                <h2 style="color: white; margin-bottom: 1rem;">Upload Your Video</h2>
-                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1rem;">Drag & drop your "Flim Video.mp4" here or click to browse</p>
-                <input type="file" id="fileInput" class="file-input" accept="video/mp4" onchange="handleFileSelect(event)">
-                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Choose Video File</button>
-            </div>
-            <div class="loader" id="loader"></div>
-        </div>
-        
-        <!-- Video Container -->
-        <div class="video-container" id="videoContainer">
-            <video id="videoPlayer" controls></video>
+        <!-- Video Container with MEGA Embed -->
+        <div class="video-container">
+            <iframe width="640" height="360" frameborder="0" src="https://mega.nz/embed/6VVWVZgD#u53t78eanLm2nQrs4hVNdtt9U8_xkbPvSLYbHSNCxbY" allowfullscreen></iframe>
         </div>
         
         <!-- Stats Section -->
@@ -560,10 +463,10 @@
         
         <!-- Download Section -->
         <div class="download-section">
-            <button class="download-btn" id="downloadVideoBtn" onclick="downloadVideo()">
+            <a href="https://mega.nz/file/6VVWVZgD#u53t78eanLm2nQrs4hVNdtt9U8_xkbPvSLYbHSNCxbY" class="download-btn">
                 <span>⬇️</span>
-                <span>Download Video</span>
-            </button>
+                <span>Download Video (3.3 GB)</span>
+            </a>
             <button class="download-btn" onclick="downloadScript()">
                 <span>📄</span>
                 <span>Download Script</span>
@@ -586,7 +489,6 @@
     </audio>
     
     <script>
-        let uploadedVideo = null;
         let audioPlaying = false;
         let currentTheme = 'dark';
         
@@ -603,101 +505,6 @@
                 particle.style.animationDuration = Math.random() * 20 + 20 + 's';
                 particlesContainer.appendChild(particle);
             }
-        }
-        
-        // File handling
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file && file.type === 'video/mp4') {
-                processVideo(file);
-            } else {
-                showToast('Please upload an MP4 video file');
-            }
-        }
-        
-        function dropHandler(ev) {
-            ev.preventDefault();
-            document.getElementById('uploadArea').classList.remove('active');
-            
-            if (ev.dataTransfer.items) {
-                for (let i = 0; i < ev.dataTransfer.items.length; i++) {
-                    if (ev.dataTransfer.items[i].kind === 'file') {
-                        const file = ev.dataTransfer.items[i].getAsFile();
-                        if (file.type === 'video/mp4') {
-                            processVideo(file);
-                        } else {
-                            showToast('Please upload an MP4 video file');
-                        }
-                    }
-                }
-            }
-        }
-        
-        function dragOverHandler(ev) {
-            ev.preventDefault();
-            document.getElementById('uploadArea').classList.add('active');
-        }
-        
-        function dragLeaveHandler(ev) {
-            document.getElementById('uploadArea').classList.remove('active');
-        }
-        
-        function processVideo(file) {
-            uploadedVideo = file;
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            
-            // Simulate upload progress
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += 10;
-                document.getElementById('progressBar').style.width = progress + '%';
-                
-                if (progress >= 100) {
-                    clearInterval(progressInterval);
-                    loader.style.display = 'none';
-                    displayVideo(file);
-                    document.getElementById('downloadVideoBtn').classList.remove('disabled');
-                    showToast('Video uploaded successfully!');
-                    
-                    setTimeout(() => {
-                        document.getElementById('progressBar').style.width = '0%';
-                    }, 1000);
-                }
-            }, 200);
-        }
-        
-        function displayVideo(file) {
-            const videoContainer = document.getElementById('videoContainer');
-            const videoPlayer = document.getElementById('videoPlayer');
-            const url = URL.createObjectURL(file);
-            
-            videoPlayer.src = url;
-            videoContainer.style.display = 'block';
-            
-            // Update upload area
-            const uploadArea = document.getElementById('uploadArea');
-            uploadArea.innerHTML = `
-                <div class="upload-icon">✅</div>
-                <h2 style="color: white; margin-bottom: 1rem;">Video Uploaded!</h2>
-                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1rem;">${file.name}</p>
-                <button class="upload-btn" onclick="location.reload()">Upload New Video</button>
-            `;
-        }
-        
-        function downloadVideo() {
-            if (!uploadedVideo) {
-                showToast('Please upload a video first');
-                return;
-            }
-            
-            const url = URL.createObjectURL(uploadedVideo);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = uploadedVideo.name;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('Video download started!');
         }
         
         function downloadScript() {
@@ -808,12 +615,9 @@
             createParticles();
             animateStats();
             
-            // Disable download button initially
-            document.getElementById('downloadVideoBtn').classList.add('disabled');
-            
             // Show welcome message
             setTimeout(() => {
-                showToast('Welcome! Upload your video to begin');
+                showToast('Welcome! Watch the video or download it');
             }, 1000);
         });
         
